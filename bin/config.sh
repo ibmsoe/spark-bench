@@ -32,5 +32,7 @@ fi
 
 RM="hdfs dfs -rm"
 DU="hdfs dfs -du"
+MKDIR="hdfs dfs -mkdir -p"
+CPFROM="hdfs dfs -copyFromLocal"
 HADOOP_CONF_DIR="${HADOOP_CONF_DIR:-$HADOOP_HOME/conf}"
 

@@ -13,7 +13,7 @@ for workload in `cat $DIR/bin/applications.lst`; do
     echo -e "$Prepare  ${workload} ..."
     
     WORKLOAD=${DIR}/${workload}
-    echo -e "Exec script: prepare/prepare.sh"
+    echo -e "Exec script: ${WORKLOAD}/bin/gen_data.sh"
     ${WORKLOAD}/bin/gen_data.sh
 
     if [ $? -ne 0 ]

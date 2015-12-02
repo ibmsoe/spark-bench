@@ -9,6 +9,7 @@ if [ -f "${bin}/../conf/env.sh" ]; then
 fi
 
 APP=SVDPlusPlus
+APP_DIR=${DATA_HDFS}/${APP}
 INPUT_HDFS=${DATA_HDFS}/${APP}/Input
 OUTPUT_HDFS=${DATA_HDFS}/${APP}/Output
 

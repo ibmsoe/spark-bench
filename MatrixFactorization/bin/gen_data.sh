@@ -17,13 +17,15 @@ JAR="${DIR}/target/MFApp-1.0.jar"
 CLASS="src.main.scala.MFDataGenerator"
 OPTION="${INOUT_SCHEME}${INPUT_HDFS} ${m} ${n}  ${rank} ${trainSampFact} ${noise} ${sigma} ${test} ${testSampFact} ${NUM_OF_PARTITIONS}"
 
+JBLAS_JAR="${DIR}/bin/jblas-1.2.4.jar"
+
 START_TS=`get_start_ts`;
 
 setup
 START_TIME=`timestamp`
 #exec ${SPARK_HOME}/bin/spark-submit --class $CLASS --master ${APP_MASTER} ${YARN_OPT} ${SPARK_OPT}  $JAR ${OPTION} 2>&1|tee ${BENCH_NUM}/${APP}_gendata_${START_TS}.dat
 res=$?;
-exec ${SPARK_HOME}/bin/spark-submit --jars ~/.m2/repository/org/jblas/jblas/1.2.4/jblas-1.2.4.jar --class $CLASS --master ${APP_MASTER} ${YARN_OPT} ${SPARK_OPT}  $JAR ${OPTION} 2>&1|tee ${BENCH_NUM}/${APP}_gendata_${START_TS}.dat
+exec ${SPARK_HOME}/bin/spark-submit --jars ${JBLAS_JAR} --class $CLASS --master ${APP_MASTER} ${YARN_OPT} ${SPARK_OPT}  $JAR ${OPTION} 2>&1|tee ${BENCH_NUM}/${APP}_gendata_${START_TS}.dat
 res=$?;
 
 END_TIME=`timestamp`

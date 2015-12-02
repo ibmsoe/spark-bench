@@ -20,14 +20,26 @@ OPTION="${INOUT_SCHEME}${INPUT_HDFS} ${numV} ${NUM_OF_PARTITIONS} ${mu} ${sigma}
 
 START_TS=`get_start_ts`;
 
-#${CPFROM} ${SPARK_HOME}/graphx/data/followers.txt ${INPUT_HDFS}
-#${CPFROM} ${SPARK_HOME}/graphx/data/users.txt ${INPUT_HDFS}
-
 setup
 START_TIME=`timestamp`
-exec ${SPARK_HOME}/bin/spark-submit --class $CLASS --master ${APP_MASTER} ${YARN_OPT} ${SPARK_OPT}  $JAR ${OPTION} 2>&1|tee ${BENCH_NUM}/${APP}_gendata_${START_TS}.dat
-res=$?;
 
+genOpt="large"
+if [ $genOpt = "small" ]; then
+  exec ${SPARK_HOME}/bin/spark-submit --class $CLASS --master ${APP_MASTER} ${YARN_OPT} ${SPARK_OPT}  $JAR ${OPTION} 2>&1|tee ${BENCH_NUM}/${APP}_gendata_${START_TS}.dat
+  res=$?;
+elif [ $genOpt = "large" ]; then
+  ${MKDIR} ${APP_DIR}
+  ${MKDIR} ${INPUT_HDFS}
+  srcf=${DATASET_DIR}/web-Google.txt
+  ${CPFROM} $srcf ${INPUT_HDFS}
+  for((i=1; i<${DATA_COPIES}; i++)); do
+    ${HADOOP_HOME}/bin/hdfs dfs -appendToFile $srcf ${INPUT_HDFS}/web-Google.txt 2> /dev/null
+  done
+  res=$?;
+else
+  echo "error"
+  exit 1
+fi
 
 END_TIME=`timestamp`
 

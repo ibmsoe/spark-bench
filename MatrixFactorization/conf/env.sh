@@ -1,7 +1,8 @@
 # for prepare #200M=1million points
 m=50 
 n=20
-rank=10
+#rank=10
+rank=100
 trainSampFact=0.9
 noise=false
 sigma=0.1

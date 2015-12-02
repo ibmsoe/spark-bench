@@ -64,10 +64,11 @@ function purge_data(){
 	#echo $nn
 	ssh  -t $nn "sudo sh -c \"$cmd\""; 
 	done;
-	echo "date purged on ${mc_list}"
+	echo "data purged on ${mc_list}"
 }
 function get_start_ts() {
-   ts=`ssh ${master} "date +%F-%T"`
+#   ts=`ssh ${master} "date +%F-%T"`
+   ts=`date +%F-%T`
    echo $ts
 }
 function setup(){
@@ -100,6 +101,12 @@ function set_gendata_opt(){
   fi
   if [ ! -z "$SPARK_DEFAULT_PARALLELISM" ]; then
     SPARK_OPT="${SPARK_OPT} --conf spark.default.parallelism=${SPARK_DEFAULT_PARALLELISM}"
+  fi
+  if [ ! -z "$SPARK_KRYOSERIALIZER_BUFFER_MAX" ]; then
+    SPARK_OPT="${SPARK_OPT} --conf spark.kryoserializer.buffer.max=${SPARK_KRYOSERIALIZER_BUFFER_MAX}"
+  fi
+  if [ ! -z "$SPARK_DRIVER_MEMORY" ]; then
+    SPARK_OPT="${SPARK_OPT} --conf spark.driver.memory=${SPARK_DRIVER_MEMORY}"
   fi
 
   YARN_OPT=

@@ -2,7 +2,8 @@
 # NetworkWordCount StatefulNetworkWordCount CustomReceiver QueueStream RawNetworkGrep ActorWordCount
 #  MQTTWordCount ZeroMQWordCount TwitterAlgebirdCMS TwitterAlgebirdHLL TwitterPopularTags
 # PageViewStream StreamingLogisticRegression
-subApp=PageViewStream
+#subApp=PageViewStream
+subApp=TwitterPopularTags
 optApp=80000000
 
 

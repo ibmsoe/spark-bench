@@ -8,7 +8,7 @@ import scala.util.Random
 import com.github.fommil.netlib.BLAS.{getInstance => blas}
 
 import org.apache.spark.SparkContext
-import org.apache.spark.annotation.{DeveloperApi, Since}
+/*import org.apache.spark.annotation.{DeveloperApi, Since}*/
 import org.apache.spark.mllib.linalg.Vectors
 import org.apache.spark.mllib.regression.LabeledPoint
 import org.apache.spark.rdd.RDD

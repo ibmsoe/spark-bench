@@ -12,9 +12,9 @@ ${RM} -r ${INPUT_HDFS}
 
 # generate data
 START_TS=`get_start_ts`;
-
+echo ${DATA_COPIES}
 setup
-genOpt="small"
+genOpt="large"
 if [ $genOpt = "small" ]; then
 	JAR="${DIR}/target/PageRankApp-1.0.jar"
 	CLASS="src.main.scala.pageRankDataGen"
@@ -25,9 +25,13 @@ res=$?;
 elif [ $genOpt = "large" ]; then
 	START_TIME=`timestamp`
 	${MKDIR} ${APP_DIR}
-	${MKDIR}r ${INPUT_HDFS}
-	srcf=${DATASET_DIR}/web-Google.txt	#srcf=${DATASET_DIR}/BigDataGeneratorSuite/Graph_datagen/AMR_gen_edge_24.txt
+	${MKDIR} ${INPUT_HDFS}
+	srcf=${DATASET_DIR}/web-Google.txt
 	${CPFROM} $srcf ${INPUT_HDFS}
+        for((i=1; i<${DATA_COPIES}; i++)); do
+            ${HADOOP_HOME}/bin/hdfs dfs -appendToFile $srcf ${INPUT_HDFS}/web-Google.txt 2> /dev/null
+        done
+
 else
 	echo "error"
 	exit 1

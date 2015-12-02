@@ -12,7 +12,7 @@ DIR=`cd $bin/../; pwd`
 SIZE=`${DU} -s ${INPUT_HDFS} | awk '{ print $1 }'`
 
 
-JAR="${SPARK_HOME}/examples/target/scala-2.10/spark-examples-${SPARK_VERSION}-hadoop2.3.0.jar"
+JAR="${SPARK_HOME}/examples/target/scala-2.10/spark-examples-${SPARK_VERSION}-hadoop2.7.1.jar"
 if [[ -z "$JAR" ]]; then
   echo "Failed to find Spark examples assembly in  ${SPARK_HOME}/examples/target" 1>&2
   echo "You need to build Spark before running this program" 1>&2
@@ -51,10 +51,10 @@ elif [ $subApp = "ActorWordCount" ];then
 	OPTION="minli1 9999"
 	CLASS="org.apache.spark.examples.streaming.${subapp}"
 elif [ $subApp = "PageViewStream"  ];then	
-	OPTION="errorRatePerZipCode minli1 44444"
+	OPTION="errorRatePerZipCode ${PAGEVIEW_GEN} 44444"
 	#CLASS="org.apache.spark.examples.streaming.${subapp}"
 	CLASS="src.main.scala.PageViewStream"
-	JAR="${DIR}/target/scala-2.10/streamingapp_2.10-1.0.jar"
+	JAR="${DIR}/target/StreamingApp-1.0.jar"
 elif [ $subApp = "MQTTWordCount"  ];then	
 	OPTION="tcp://minli1:1883 foo"
 	CLASS="org.apache.spark.examples.streaming.${subapp}"

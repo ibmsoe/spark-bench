@@ -13,14 +13,18 @@ ${RM} -r ${INPUT_HDFS}
 # generate data
 START_TS=`get_start_ts`;
 setup
-genOpt="small"
+#genOpt="small"
+genOpt="large"
 if [ $genOpt = "large" ];then
 	${MKDIR} ${APP_DIR}
 	${MKDIR} ${INPUT_HDFS}
-	#srcf=${DATASET_DIR}/web-Google.txt
-	srcf=${DATASET_DIR}/BigDataGeneratorSuite/Graph_datagen/AMR_gen_edge_24.txt
+	srcf=${DATASET_DIR}/web-Google.txt
+	#srcf=${DATASET_DIR}/BigDataGeneratorSuite/Graph_datagen/AMR_gen_edge_24.txt
 	START_TIME=`timestamp`
 	${CPFROM} $srcf ${INPUT_HDFS}	
+        for((i=1; i<${DATA_COPIES}; i++)); do
+          ${HADOOP_HOME}/bin/hdfs dfs -appendToFile $srcf ${INPUT_HDFS}/web-Google.txt 2> /dev/null
+        done
 elif [ $genOpt = "small" ];then
 	JAR="${DIR}/../common/target/Common-1.0.jar"
 	CLASS="DataGen.src.main.scala.GraphDataGen"
