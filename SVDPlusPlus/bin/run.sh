@@ -21,7 +21,6 @@ echo "opt ${OPTION}"
 
 
 setup
-echo SPARK_OPT=${SPARK_OPT}
 for((i=0;i<${NUM_TRIALS};i++)); do
 
     ${RM} -r ${OUTPUT_HDFS}

@@ -12,7 +12,6 @@ ${RM} -r ${INPUT_HDFS}
 
 # generate data
 START_TS=`get_start_ts`;
-echo ${DATA_COPIES}
 setup
 genOpt="large"
 if [ $genOpt = "small" ]; then

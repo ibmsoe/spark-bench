@@ -28,7 +28,6 @@ echo "========== running ${APP} benchmark =========="
 
 setup
 for((i=0;i<${NUM_TRIALS};i++)); do
-        echo trial $i
 	${RM} -r ${OUTPUT_HDFS}
 	purge_data "${MC_LIST}"	
 START_TS=`get_start_ts`;
