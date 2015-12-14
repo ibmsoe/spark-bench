@@ -41,7 +41,7 @@ if [ $subApp = "StreamingLogisticRegression" ];then
 
 
 		START_TIME=`timestamp`
-		START_TS=`ssh ${master} "date +%F-%T"`
+		START_TS=`get_start_ts`
 
 		${HADOOP_HOME}/bin/hdfs dfs -rm -r  ${trainingDir}/*
 		tmpdir=${INPUT_HDFS}/tmp-train
@@ -69,7 +69,7 @@ res=$?;
 		END_TIME=`timestamp`
 		sleep 5
 get_config_fields >> ${BENCH_REPORT}
-print_config  ${APP} ${START_TIME} ${END_TIME} ${SIZE} ${START_TS} ${res}>> ${BENCH_REPORT};
+print_config  ${APP} ${START_TIME} ${END_TIME} ${SIZE:-0} ${START_TS} ${res}>> ${BENCH_REPORT};
 	done
 
 	exit 0
@@ -145,7 +145,8 @@ START_TS=`get_start_ts`;
 res=$?;
 	END_TIME=`timestamp`
 get_config_fields >> ${BENCH_REPORT}
-print_config  ${APP} ${START_TIME} ${END_TIME} ${SIZE} ${START_TS} ${res}>> ${BENCH_REPORT};
+print_config  ${APP} ${START_TIME} ${END_TIME} ${SIZE:-0} ${START_TS} ${res}>> ${BENCH_REPORT};
+print_extended_config ${APP}-gen-with-config
 done
 teardown
 exit 0

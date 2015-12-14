@@ -34,8 +34,9 @@ res=$?;
 END_TIME=`timestamp`
 
 SIZE=`${DU} -s ${INPUT_HDFS} | awk '{ print $1 }'`
-#get_config_fields >> ${BENCH_REPORT}
-print_config  ${APP} ${START_TIME} ${END_TIME} ${SIZE} ${START_TS} ${res}>> ${BENCH_REPORT};
+get_config_fields >> ${BENCH_REPORT}
+print_config  ${APP}-gen ${START_TIME} ${END_TIME} ${SIZE} ${START_TS} ${res}>> ${BENCH_REPORT};
+print_extended_config ${APP}-gen-with-config
 teardown
 exit 0
 
