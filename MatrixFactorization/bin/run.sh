@@ -31,7 +31,7 @@ for((i=0;i<${NUM_TRIALS};i++)); do
 
     END_TIME=`timestamp`
     get_config_fields >> ${BENCH_REPORT}
-    print_config  ${APP} ${START_TIME} ${END_TIME} ${SIZE} ${START_TS} ${res}>> ${BENCH_REPORT};
+    print_config  ${APP} ${START_TIME} ${END_TIME} ${SIZE:-0} ${START_TS} ${res}>> ${BENCH_REPORT};
 done
 teardown
 exit 0
