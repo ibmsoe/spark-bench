@@ -13,7 +13,7 @@ SIZE=`${DU} -s ${INPUT_HDFS} | awk '{ print $1 }'`
 
 
 JAR="${SPARK_HOME}/examples/target/scala-2.10/spark-examples-${SPARK_VERSION}-hadoop2.7.1.jar"
-if [[ -z "$JAR" ]]; then
+if [[ ! -f "$JAR" ]]; then
   echo "Failed to find Spark examples assembly in  ${SPARK_HOME}/examples/target" 1>&2
   echo "You need to build Spark before running this program" 1>&2
   exit 1
@@ -98,7 +98,8 @@ START_TS=`get_start_ts`;
 res=$?;
 	END_TIME=`timestamp`
 get_config_fields >> ${BENCH_REPORT}
-print_config  ${APP} ${START_TIME} ${END_TIME} ${SIZE} ${START_TS} ${res}>> ${BENCH_REPORT};
+print_config  ${APP} ${START_TIME} ${END_TIME} ${SIZE:-0} ${START_TS} ${res}>> ${BENCH_REPORT};
+print_extended_config ${APP}-with-config
 done
 teardown
 exit 0

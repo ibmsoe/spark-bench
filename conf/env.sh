@@ -1,11 +1,12 @@
 # global settings
 
+# HDFS master
 master="hdfs-master-0"
 #A list of machines where the spark cluster is running
-MC_LIST="plugin-0"
-sparkmaster="plugin-0"
-export SPARK_HOME=/usr/lib/spark
-export HADOOP_HOME=/usr/lib/hadoop
+MC_LIST=`hostname`
+sparkmaster=`hostname`
+[ -z "$SPARK_HOME" ] && export SPARK_HOME=/usr/lib/spark
+[ -z "$HADOOP_HOME" ] && export HADOOP_HOME=/usr/lib/hadoop
 export PATH="$PATH:$HADOOP_HOME/bin"
 
 # base dir for DataSet
@@ -13,7 +14,10 @@ HDFS_URL="hdfs://${master}:8020"
 SPARK_HADOOP_FS_LOCAL_BLOCK_SIZE=536870912
 
 # base dir in HDFS for data ingestion & output
-DATA_HDFS="${HDFS_URL}/spark-bench"
+# Remote HDFS
+#DATA_HDFS="${HDFS_URL}/spark-bench"
+# Local HDFS
+DATA_HDFS="hdfs:///user/ubuntu/spark-bench"
 
 
 #Local dataset dir where preloaded datasets resides
@@ -27,7 +31,8 @@ SPARK_VERSION=1.4.1  #1.4.0
 #SPARK_MASTER=local[K]
 #SPARK_MASTER=local[*]
 #SPARK_MASTER=yarn-client
-SPARK_MASTER=spark://${sparkmaster}:7077
+#SPARK_MASTER=spark://${sparkmaster}:7077
+SPARK_MASTER=${MASTER}
 
 # host running generator for PageView Streaming App
 PAGEVIEW_GEN=${sparkmaster}
@@ -48,14 +53,12 @@ SPARK_KRYOSERIALIZER_BUFFER_MAX=2047m
 # - SPARK_STORAGE_MEMORYFRACTION, --conf spark.storage.memoryfraction
 SPARK_STORAGE_MEMORYFRACTION=0.5
 #export MEM_FRACTION_GLOBAL=0.005
-SPARK_EXECUTOR_MEMORY=200g
-SPARK_DRIVER_MEMORY=10g
 
 # Spark options in YARN client mode
 # - SPARK_DRIVER_MEMORY, --driver-memory
 # - SPARK_EXECUTOR_INSTANCES, --num-executors
 # - SPARK_EXECUTOR_CORES, --executor-cores
-# - SPARK_DRIVER_MEMORY, --driver-memory
+# - SPARK_EXECUTOR_MEMORY, --executor-memory
 export EXECUTOR_GLOBAL_MEM=40G
 export executor_cores=6
 

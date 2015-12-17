@@ -36,8 +36,9 @@ START_TS=`get_start_ts`;
 	exec ${SPARK_HOME}/bin/spark-submit --class $CLASS --master ${APP_MASTER} ${YARN_OPT} ${SPARK_OPT} ${SPARK_RUN_OPT} $JAR ${OPTION} 2>&1|tee $logf
 res=$?;
 	END_TIME=`timestamp`
-#get_config_fields >> ${BENCH_REPORT}
+get_config_fields >> ${BENCH_REPORT}
 print_config  ${APP} ${START_TIME} ${END_TIME} ${SIZE} ${START_TS} ${res}>> ${BENCH_REPORT};
+print_extended_config ${APP}-with-config
 done
 teardown
 exit 0

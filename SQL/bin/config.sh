@@ -24,8 +24,25 @@ APP_MASTER=${SPARK_MASTER}
 set_gendata_opt
 set_run_opt
 
-#input benreport
 function print_config(){
+get_config_values $1 $2 $3 $4 $5 $6
+}
+
+function get_config_fields(){
+local report_field=$(get_report_field_name)
+echo -n "#${report_field},AppType,numV,numPar,mu,sigma,iter,tol,reset_prob"
+echo -en "\n"
+
+}
+function get_config_values(){
+gen_report $1 $2 $3 $4 $5 $6
+echo -n ",${APP}-MLlibConfig,${numV},${NUM_OF_PARTITIONS},${mu},${sigma},${MAX_ITERATION},${TOLERANCE},${RESET_PROB}"
+echo -en "\n"
+return 0
+}
+
+#output results + extended config details
+function print_extended_config(){
 	local output=$1
 
 	CONFIG=

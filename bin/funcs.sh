@@ -57,19 +57,24 @@ function check_dir() {
 }
 #usage purge_date "${MC_LIST}"
 function purge_data(){
-	local mc_list="$1"	
-	cmd="echo 3 >/proc/sys/vm/drop_caches"; 
-	#echo ${mc_list}
-	for nn in ${mc_list}; do 
-	#echo $nn
-	ssh  -t $nn "sudo sh -c \"$cmd\""; 
-	done;
-	echo "data purged on ${mc_list}"
+    local mc_list="$1"
+    cmd="echo 3 2>/dev/null >/proc/sys/vm/drop_caches || echo 'cannot drop caches inside a container'"
+    if [ -n "$mc_list" ]; then
+        # drop caches on workers
+        for nn in ${mc_list}; do
+            #echo $nn
+            ssh  -t $nn "sudo sh -c \"$cmd\""
+        done
+        echo "data purged on ${mc_list}"
+    else
+        # drop caches on local (standalone)
+        sudo sh -c "$cmd"
+        echo "data purged on local"
+    fi
 }
 function get_start_ts() {
-#   ts=`ssh ${master} "date +%F-%T"`
-   ts=`date +%F-%T`
-   echo $ts
+    ts=`date +%F-%T`
+    echo $ts
 }
 function setup(){
   if [ "${MASTER}" = "spark" ] && [ "${RESTART}" = "TRUE" ] ; then
